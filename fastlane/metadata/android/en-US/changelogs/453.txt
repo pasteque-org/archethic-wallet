@@ -1,5 +1,0 @@
-Archethic Wallet - Version 2.2.0 Build 453
-
-- UI Improvements
-- Improve performances
-- Prevent user from jailbreak

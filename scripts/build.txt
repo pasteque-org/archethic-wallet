@@ -1,7 +1,6 @@
 # ios
 cd ios
 flutter build ios
-fastlane beta
 # android
 flutter build apk --split-per-abi
 # web

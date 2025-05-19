@@ -18,14 +18,6 @@ pubspec_overrides.yaml
 # Test 
 test/tmp_data
 
-# Fastlane
-**/fastlane/*.p8
-.env*
-**/fastlane/Preview.html
-**/fastlane/report.xml
-**/fastlane/screenshots
-**/fastlane/test_output
-
 # IntelliJ related
 *.iml
 *.ipr
@@ -154,5 +146,4 @@ node_modules/
 linux/appimage/AppDir/data/
 linux/appimage/AppDir/lib/
 android/secret/ae-wallet-c8d742e33023.json
-fastlane/FastlaneUtils
 .cursor/rules/archethic_wallet_rules.mdc

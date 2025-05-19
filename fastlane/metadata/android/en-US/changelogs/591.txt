@@ -1,3 +1,0 @@
-Version 3.0.9
-
-- Fix LP Token Fiat Value
