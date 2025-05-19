@@ -27,7 +27,7 @@ jobs:
         run: flutter pub get
 
       - name: Build Flutter Application (macOS)
-        run: flutter build macos --release
+        run: flutter build macos --release --no-codesign
 
       - name: Get Version from pubspec.yaml
         id: get_version
