@@ -47,7 +47,7 @@ jobs:
           echo "Decoding Keystore..."
           echo $ANDROID_KEYSTORE_BASE64 | base64 --decode > android/${ANDROID_KEYSTORE_FILENAME}
           echo "Creating key.properties file..."
-          echo "storeFile=../${ANDROID_KEYSTORE_FILENAME}" > android/key.properties
+          echo "storeFile=./${ANDROID_KEYSTORE_FILENAME}" > android/key.properties
           echo "storePassword=$ANDROID_KEYSTORE_PASSWORD" >> android/key.properties
           echo "keyAlias=$ANDROID_KEY_ALIAS" >> android/key.properties
           echo "keyPassword=$ANDROID_KEY_PASSWORD" >> android/key.properties
