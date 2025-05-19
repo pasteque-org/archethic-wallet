@@ -4,10 +4,12 @@ on:
   release:
     types:
       - created
+permissions:
+  contents: write
 
 jobs:
   build-macos:
-    if: contains(github.event.release.tag_name, 'macos') || (!contains(github.event.release.tag_name, 'linux') && !contains(github.event.release.tag_name, 'windows') && !contains(github.event.release.tag_name, 'chrome') && !contains(github.event.release.tag_name, 'android'))
+    if: contains(github.event.release.tag_name, 'macos') || (!contains(github.event.release.tag_name, 'linux') && !contains(github.event.release.tag_name, 'windows') && !contains(github.event.release.tag_name, 'chrome') && !contains(github.event.release.tag_name, 'android') && !contains(github.event.release.tag_name, 'macos'))
     runs-on: macos-latest
 
     steps:
