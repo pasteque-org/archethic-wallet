@@ -1,5 +1,4 @@
 name: Build and Package macOS app
-
 on:
   release:
     types:
@@ -27,7 +26,7 @@ jobs:
         run: flutter pub get
 
       - name: Build Flutter Application (macOS)
-        run: flutter build macos --release --no-codesign
+        run: flutter build macos --release
 
       - name: Get Version from pubspec.yaml
         id: get_version

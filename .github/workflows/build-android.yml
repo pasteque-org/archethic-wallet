@@ -36,6 +36,27 @@ jobs:
       - name: Flutter Doctor
         run: flutter doctor -v
 
+      - name: Setup Android Signing
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          ANDROID_KEYSTORE_FILENAME: ${{ secrets.ANDROID_KEYSTORE_FILENAME }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          echo "Decoding Keystore..."
+          echo $ANDROID_KEYSTORE_BASE64 | base64 --decode > android/${ANDROID_KEYSTORE_FILENAME}
+          echo "Creating key.properties file..."
+          echo "storeFile=../${ANDROID_KEYSTORE_FILENAME}" > android/key.properties
+          echo "storePassword=$ANDROID_KEYSTORE_PASSWORD" >> android/key.properties
+          echo "keyAlias=$ANDROID_KEY_ALIAS" >> android/key.properties
+          echo "keyPassword=$ANDROID_KEY_PASSWORD" >> android/key.properties
+          echo "Successfully created key.properties and keystore file."
+          echo "Listing android directory to confirm:"
+          ls -la android/
+          echo "Content of key.properties:"
+          cat android/key.properties
+
       - name: Install Flutter dependencies
         run: flutter pub get
 
