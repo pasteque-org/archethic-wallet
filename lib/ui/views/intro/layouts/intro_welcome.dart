@@ -1,11 +1,8 @@
-import 'dart:ui';
-
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/version.dart';
 import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/ui/figma_components/buttons/btn_footer_primary.dart';
-import 'package:aewallet/ui/figma_components/checkbox/checkbox_confirm.dart';
 import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
@@ -22,7 +19,6 @@ import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class IntroWelcome extends ConsumerStatefulWidget {
   const IntroWelcome({super.key});
@@ -34,8 +30,6 @@ class IntroWelcome extends ConsumerStatefulWidget {
 
 class _IntroWelcomeState extends ConsumerState<IntroWelcome>
     implements SheetSkeletonInterface {
-  bool cguChecked = false;
-
   @override
   Widget build(BuildContext context) {
     return SheetSkeleton(
@@ -52,39 +46,12 @@ class _IntroWelcomeState extends ConsumerState<IntroWelcome>
     return _Footer(
       isConnectivityAvailable:
           connectivityStatusProvider == ConnectivityStatus.isConnected,
-      cguChecked: cguChecked,
-      onToggleCGU: (newValue) {
-        setState(() {
-          cguChecked = newValue!;
-        });
-      },
     );
   }
 
   @override
   PreferredSizeWidget getAppBar(BuildContext context, WidgetRef ref) {
     return AppBar(
-      flexibleSpace: ClipRRect(
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-          child: Container(
-            padding: const EdgeInsets.only(top: 25),
-            color: Colors.transparent,
-            alignment: Alignment.centerLeft,
-            child: Padding(
-              padding: EdgeInsets.zero,
-              child: SizedBox(
-                height: 30,
-                child: SvgPicture.asset(
-                  '${ArchethicTheme.assetsFolder}Archethic - Logo.svg',
-                  colorFilter:
-                      ColorFilter.mode(ArchethicTheme.text, BlendMode.srcIn),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
       systemOverlayStyle: ArchethicTheme.brightness == Brightness.light
           ? SystemUiOverlayStyle.dark
           : SystemUiOverlayStyle.light,
@@ -99,158 +66,26 @@ class _IntroWelcomeState extends ConsumerState<IntroWelcome>
 
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Text.rich(
-            TextSpan(
-              style: Theme.of(context).textTheme.displayLarge!.copyWith(
-                    fontSize: 40,
-                    fontWeight: FontWeightTelegraf.fontWeightUltrabold,
-                    height: 1.3,
-                    textBaseline: TextBaseline.alphabetic, // Ajoutez ceci
-                  ),
-              children: [
-                TextSpan(
-                  text: localizations.welcomeTitle,
+          Container(
+            width: MediaQuery.of(context).size.width,
+            color: Colors.transparent,
+            alignment: Alignment.center,
+            child: Padding(
+              padding: EdgeInsets.zero,
+              child: SizedBox(
+                height: 30,
+                child: SvgPicture.asset(
+                  '${ArchethicTheme.assetsFolder}Archethic - Logo.svg',
+                  colorFilter:
+                      ColorFilter.mode(ArchethicTheme.text, BlendMode.srcIn),
                 ),
-                WidgetSpan(
-                  alignment: PlaceholderAlignment.baseline,
-                  baseline: TextBaseline.alphabetic,
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 14),
-                    child: Baseline(
-                      baseline: 0.6,
-                      baselineType: TextBaseline.alphabetic,
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 3,
-                          horizontal: 12,
-                        ),
-                        decoration: BoxDecoration(
-                          gradient: ArchethicGradients.gradientArchethic,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Text(
-                          localizations.welcomeTitle2,
-                          style: Theme.of(context)
-                              .textTheme
-                              .displayLarge!
-                              .copyWith(
-                                fontSize: 40,
-                                color: Colors.black,
-                                fontWeight: FontWeightTelegraf.fontWeightBlack,
-                              ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
-          Text.rich(
-            TextSpan(
-              children: [
-                TextSpan(
-                  text: localizations.welcomeDesc1,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyMediumWithOpacity
-                      .copyWith(fontWeight: FontWeightTelegraf.fontWeightBold),
-                ),
-                TextSpan(
-                  text: localizations.welcomeDesc2,
-                  style: Theme.of(context).textTheme.bodyMediumWithOpacity,
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Text.rich(
-            TextSpan(
-              children: [
-                TextSpan(
-                  text: localizations.welcomeDesc3,
-                  style: Theme.of(context).textTheme.bodyMediumWithOpacity,
-                ),
-                TextSpan(
-                  text: localizations.welcomeDesc4,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyMediumWithOpacity
-                      .copyWith(fontWeight: FontWeightTelegraf.fontWeightBold),
-                ),
-                TextSpan(
-                  text: localizations.welcomeDesc5,
-                  style: Theme.of(context).textTheme.bodyMediumWithOpacity,
-                ),
-                TextSpan(
-                  text: localizations.welcomeDesc6,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyMediumWithOpacity
-                      .copyWith(fontWeight: FontWeightTelegraf.fontWeightBold),
-                ),
-                TextSpan(
-                  text: localizations.welcomeDesc7,
-                  style: Theme.of(context).textTheme.bodyMediumWithOpacity,
-                ),
-                TextSpan(
-                  text: localizations.welcomeDesc8,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyMediumWithOpacity
-                      .copyWith(fontWeight: FontWeightTelegraf.fontWeightBold),
-                ),
-                TextSpan(
-                  text: localizations.welcomeDesc9,
-                  style: Theme.of(context).textTheme.bodyMediumWithOpacity,
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          CheckboxConfirm(
-            text: Row(
-              children: [
-                Text(
-                  localizations.welcomeConfirmCGU1,
-                  style: Theme.of(context).textTheme.bodySmallWithOpacity,
-                ),
-                InkWell(
-                  onTap: () async {
-                    await launchUrl(
-                      Uri.parse(
-                        'https://www.archethic.net/privacy-policy-wallet.html',
-                      ),
-                      mode: LaunchMode.externalApplication,
-                    );
-                  },
-                  child: Text(
-                    localizations.welcomeConfirmCGU2,
-                    style: Theme.of(context).textTheme.bodySmallLink,
-                  ),
-                ),
-              ],
-            ),
-            value: cguChecked,
-            onChanged: (newValue) {
-              setState(() {
-                cguChecked = newValue;
-              });
-            },
-          ),
-          const SizedBox(
-            height: 100,
           ),
         ],
       ),
@@ -261,32 +96,24 @@ class _IntroWelcomeState extends ConsumerState<IntroWelcome>
 class _Footer extends ConsumerWidget {
   const _Footer({
     required this.isConnectivityAvailable,
-    required this.cguChecked,
-    required this.onToggleCGU,
   });
 
   final bool isConnectivityAvailable;
-  final bool cguChecked;
-  final Function(bool? newValue) onToggleCGU;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Column(
+    return const Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
-        _ButtonNewWallet(
-          cguChecked: cguChecked,
-        ),
-        const SizedBox(
+        _ButtonNewWallet(),
+        SizedBox(
           height: 10,
         ),
-        _ButtonImportWallet(
-          cguChecked: cguChecked,
-        ),
-        const SizedBox(
+        _ButtonImportWallet(),
+        SizedBox(
           height: 10,
         ),
-        const _VersionInfo(),
+        _VersionInfo(),
       ],
     );
   }
@@ -326,9 +153,7 @@ class _VersionInfo extends ConsumerWidget {
 }
 
 class _ButtonNewWallet extends ConsumerWidget {
-  const _ButtonNewWallet({required this.cguChecked});
-
-  final bool cguChecked;
+  const _ButtonNewWallet();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -337,26 +162,21 @@ class _ButtonNewWallet extends ConsumerWidget {
     return BtnFooterPrimary(
       buttonText: localizations.newWallet,
       onTap: () async {
-        if (cguChecked) {
-          await ref
-              .read(SettingsProviders.settings.notifier)
-              .setEnvironment(aedappfm.Environment.mainnet);
+        await ref
+            .read(SettingsProviders.settings.notifier)
+            .setEnvironment(aedappfm.Environment.mainnet);
 
-          context.go(
-            IntroNewWalletGetFirstInfos.routerPage,
-          );
-        }
+        context.go(
+          IntroNewWalletGetFirstInfos.routerPage,
+        );
       },
-      isLocked: !cguChecked,
       key: const Key('newWallet'),
     );
   }
 }
 
 class _ButtonImportWallet extends ConsumerWidget {
-  const _ButtonImportWallet({required this.cguChecked});
-
-  final bool cguChecked;
+  const _ButtonImportWallet();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -365,17 +185,14 @@ class _ButtonImportWallet extends ConsumerWidget {
     return BtnFooterPrimary(
       buttonText: localizations.importWallet,
       onTap: () async {
-        if (cguChecked) {
-          final environment = await context.push(EnvironmentDialog.routerPage);
-          if (environment != null) {
-            await ref
-                .read(SettingsProviders.settings.notifier)
-                .setEnvironment(environment as aedappfm.Environment);
-          }
-          context.go(IntroImportSeedPage.routerPage);
+        final environment = await context.push(EnvironmentDialog.routerPage);
+        if (environment != null) {
+          await ref
+              .read(SettingsProviders.settings.notifier)
+              .setEnvironment(environment as aedappfm.Environment);
         }
+        context.go(IntroImportSeedPage.routerPage);
       },
-      isLocked: !cguChecked,
       key: const Key('importWallet'),
       btnPrimaryType: BtnFooterPrimaryType.outlinePrimary,
     );

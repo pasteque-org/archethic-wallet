@@ -266,7 +266,6 @@ dev_dependencies:
   # A code generator for Riverpod. This both simplifies the syntax empowers it, such as allowing stateful hot-reload.
   riverpod_generator: ^2.6.3
   riverpod_lint: ^2.6.3
-  translations_cleaner: ^0.0.5
 
 msix_config:
   display_name: Archethic Wallet
@@ -335,24 +334,6 @@ flutter:
     - family: UiIcons
       fonts:
         - asset: assets/fonts/ui_icons.ttf
-    - family: PPTelegraf
-      fonts:
-        - asset: assets/fonts/PPTelegraf-Ultralight.otf
-          weight: 200
-        - asset: assets/fonts/PPTelegraf-Light.otf
-          weight: 300
-        - asset: assets/fonts/PPTelegraf-Regular.otf
-          weight: 400
-        - asset: assets/fonts/PPTelegraf-Medium.otf
-          weight: 500
-        - asset: assets/fonts/PPTelegraf-Semibold.otf
-          weight: 600
-        - asset: assets/fonts/PPTelegraf-Bold.otf
-          weight: 700
-        - asset: assets/fonts/PPTelegraf-Ultrabold.otf
-          weight: 800
-        - asset: assets/fonts/PPTelegraf-Black.otf
-          weight: 900
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

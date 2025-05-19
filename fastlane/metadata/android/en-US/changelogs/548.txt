@@ -1,3 +1,0 @@
-Archethic Wallet - Version 2.3.9 Build 548
-
-- Fix bugs

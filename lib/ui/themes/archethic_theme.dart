@@ -111,9 +111,7 @@ class ArchethicTheme {
   static const String backgroundSmall =
       'assets/themes/archethic/main-background.png';
   static String backgroundWelcome =
-      'assets/themes/archethic/background_welcome.png';
-  static String backgroundBlocLogo =
-      'assets/themes/archethic/background-bloclogo.png';
+      'assets/themes/archethic/main-background.png';
 
   // Animation Overlay
   static Color animationOverlayMedium =

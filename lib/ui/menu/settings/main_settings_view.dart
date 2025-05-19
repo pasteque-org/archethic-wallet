@@ -75,21 +75,6 @@ class MainMenuView extends ConsumerWidget {
                       ),
                       const _SettingsListItem.spacer(),
                       _SettingsListItem.title(text: localizations.information),
-                      const _SettingsListItem.spacer(),
-                      _SettingsListItem.singleLineWithInfos(
-                        heading: localizations.aeWebsiteLinkHeader,
-                        info: localizations.aeWebsiteLinkDesc,
-                        icon: Symbols.language,
-                        onPressed: () async {
-                          await launchUrl(
-                            Uri.parse(
-                              'https://www.archethic.net',
-                            ),
-                            mode: LaunchMode.externalApplication,
-                          );
-                        },
-                        background: ArchethicTheme.backgroundWelcome,
-                      ),
                       if (FeatureFlags.dappBoard && UniversalPlatform.isMobile)
                         const _SettingsListItem.spacer(),
                       if (FeatureFlags.dappBoard && UniversalPlatform.isMobile)
@@ -103,20 +88,6 @@ class MainMenuView extends ConsumerWidget {
                             );
                           },
                         ),
-                      const _SettingsListItem.spacer(),
-                      _SettingsListItem.singleLineWithInfos(
-                        heading: localizations.mediumLinkHeader,
-                        info: localizations.mediumLinkDesc,
-                        icon: Symbols.news,
-                        onPressed: () async {
-                          await launchUrl(
-                            Uri.parse(
-                              'https://medium.com/archethic',
-                            ),
-                            mode: LaunchMode.externalApplication,
-                          );
-                        },
-                      ),
                       const _SettingsListItem.spacer(),
                       _SettingsListItem.singleLine(
                         heading: localizations.aboutHeader,

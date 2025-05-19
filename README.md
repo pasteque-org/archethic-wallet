@@ -1,6 +1,4 @@
-[![Platform](https://img.shields.io/badge/Platform-Flutter-02569B?logo=flutter)](https://flutter.dev) [![CodeFactor](https://www.codefactor.io/repository/github/archethic-foundation/archethic-wallet/badge)](https://www.codefactor.io/repository/github/archethic-foundation/archethic-wallet)
-[![Github All Releases](https://img.shields.io/github/downloads/archethic-foundation/archethic-wallet/total.svg)](https://github.com/archethic-foundation/archethic-wallet/releases)
-[![Github Downloads (monthly)](https://img.shields.io/github/downloads/archethic-foundation/archethic-wallet/latest/total.svg)](https://github.com/archethic-foundation/archethic-wallet/releases)
+[![Platform](https://img.shields.io/badge/Platform-Flutter-02569B?logo=flutter)](https://flutter.dev)
 
 # Archethic Wallet
 
@@ -33,11 +31,6 @@ Archethic Wallet has implemented the following features:
 ## Application Initial Screen
 <img src="README_wallet.png?v=20241009" width="300"/>
 
-## How to install Archethic Wallet
-
-Available on Chrome, Android, Windows, MacOS, iOS and Linux
-[https://www.archethic.net/wallet/](https://www.archethic.net/wallet/)
-
 ## How to test the Archethic Wallet
 
 To test Archethic Wallet with Faucet:
@@ -60,17 +53,10 @@ Considering M=Major Version, m=minor version, p=patch version, +build
     - in `pubspec.yaml` section `msix_config`
     - in `/web_chrome_extension/public/manifest.json`
 
-#### Changelog
-
-- Create a new changelog file `build.txt` in `/fastlane/metadata/android/en-US/changelogs/` .
-
 
 ### Build app
 
-3 ways to build app depending of platforms
-
-- For iOS, macOS, android → cmd `Fastlane`
-- For Linux, Windows, Chrome Extension → Github actions on new github version
+Github actions on new github version
 
 
 ## Patrol installation and configuration

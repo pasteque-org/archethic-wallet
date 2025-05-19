@@ -4,10 +4,12 @@ on:
   release:
     types:
       - created
+permissions:
+  contents: write
 
 jobs:
   build-windows:
-    if: contains(github.event.release.tag_name, 'windows') || (!contains(github.event.release.tag_name, 'linux') && !contains(github.event.release.tag_name, 'windows') && !contains(github.event.release.tag_name, 'chrome'))
+    if: contains(github.event.release.tag_name, 'windows') || (!contains(github.event.release.tag_name, 'linux') && !contains(github.event.release.tag_name, 'windows') && !contains(github.event.release.tag_name, 'chrome') && !contains(github.event.release.tag_name, 'android') && !contains(github.event.release.tag_name, 'macos'))
     runs-on: windows-latest
 
     steps:

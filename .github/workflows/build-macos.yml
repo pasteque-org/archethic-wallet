@@ -1,0 +1,64 @@
+name: Build and Package macOS app
+on:
+  release:
+    types:
+      - created
+permissions:
+  contents: write
+
+jobs:
+  build-macos:
+    if: contains(github.event.release.tag_name, 'macos') || (!contains(github.event.release.tag_name, 'linux') && !contains(github.event.release.tag_name, 'windows') && !contains(github.event.release.tag_name, 'chrome') && !contains(github.event.release.tag_name, 'android') && !contains(github.event.release.tag_name, 'macos'))
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          flutter-version: "3.27.4"
+      - run: flutter --version
+
+      - name: Install Flutter dependencies
+        run: flutter pub get
+
+      - name: Build Flutter Application (macOS)
+        run: flutter build macos --release
+
+      - name: Get Version from pubspec.yaml
+        id: get_version
+        run: |
+          version_str=$(grep -oP '(?<=^version: ).*' pubspec.yaml | awk '{$1=$1};1')
+          echo "version_app=${version_str}" >> $GITHUB_OUTPUT
+          echo "env_version_app=${version_str}" >> $GITHUB_ENV
+
+      - name: Install create-dmg
+        run: brew install create-dmg
+
+      - name: Create DMG
+        run: |
+          cd build/macos/Build/Products/Release/
+          create-dmg --volname "Archethic Wallet Installer" --window-pos 200 120 --window-size 800 400 --icon-size 100 --app-drop-link 600 185 "Archethic Wallet.app" "../../../../../archethic-wallet-macos-${{ steps.get_version.outputs.version_app }}.dmg"
+          cd -
+      
+      - name: Check files
+        run: |
+          ls -R build/macos/Build/Products/Release/
+          ls -R .
+
+      - name: Checksum
+        run: |
+          sha256sum archethic-wallet-macos-${{ steps.get_version.outputs.version_app }}.dmg
+
+      - name: Upload artifact to action
+        uses: actions/upload-artifact@v4
+        with:
+          name: archethic-wallet-macos-${{ steps.get_version.outputs.version_app }}-dmg
+          path: archethic-wallet-macos-${{ steps.get_version.outputs.version_app }}.dmg
+      - name: Upload artifact to release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: archethic-wallet-macos-${{ steps.get_version.outputs.version_app }}.dmg 

@@ -39,7 +39,7 @@ class HomePage extends ConsumerStatefulWidget {
 class _HomePageState extends ConsumerState<HomePage>
     with TickerProviderStateMixin
     implements SheetSkeletonInterface {
-  int tabCount = 4;
+  int tabCount = 3;
 
   @override
   void initState() {
@@ -114,10 +114,6 @@ class _HomePageState extends ConsumerState<HomePage>
                     icon: aedappfm.Iconsax.arrange_circle_2,
                     label: AppLocalizations.of(context)!.bottomMainMenuSwap,
                   ),
-                TabItem(
-                  icon: aedappfm.Iconsax.wallet_money,
-                  label: AppLocalizations.of(context)!.bottomMainMenuEarn,
-                ),
               ],
             ),
           ),

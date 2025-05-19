@@ -215,12 +215,10 @@ class AppState extends ConsumerState<App> with WidgetsBindingObserver {
             title: 'Archethic Wallet',
             theme: ThemeData(
               brightness: Brightness.dark,
-              fontFamily: 'PPTelegraf',
               useMaterial3: true,
             ),
             darkTheme: ThemeData(
               brightness: Brightness.dark,
-              fontFamily: 'PPTelegraf',
               useMaterial3: true,
             ),
             localizationsDelegates: const [
