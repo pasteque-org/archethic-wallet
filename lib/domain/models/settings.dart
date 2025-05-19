@@ -8,7 +8,7 @@ part 'settings.freezed.dart';
 enum MainScreenTab {
   accountTab,
   transactionTab,
-  earnTab,
+  swapTab,
 }
 
 enum EarnUserLevelType { beginner, advanced }
