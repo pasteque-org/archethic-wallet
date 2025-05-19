@@ -1,0 +1,70 @@
+name: Build and Package Android app
+
+on:
+  release:
+    types:
+      - created
+
+jobs:
+  build-android:
+    if: contains(github.event.release.tag_name, 'android') || (!contains(github.event.release.tag_name, 'linux') && !contains(github.event.release.tag_name, 'windows') && !contains(github.event.release.tag_name, 'chrome') && !contains(github.event.release.tag_name, 'macos'))
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          flutter-version: "3.27.4"
+      - run: flutter --version
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v2
+
+      - name: Flutter Doctor
+        run: flutter doctor -v
+
+      - name: Install Flutter dependencies
+        run: flutter pub get
+
+      - name: Build Flutter Application (APK)
+        run: flutter build apk --release
+
+      - name: Get Version from pubspec.yaml
+        id: get_version
+        run: |
+          version_str=$(grep -oP '(?<=^version: ).*' pubspec.yaml | awk '{$1=$1};1')
+          echo "version_app=${version_str}" >> $GITHUB_OUTPUT
+          echo "env_version_app=${version_str}" >> $GITHUB_ENV
+      
+      - name: Rename APK
+        run: |
+          mv build/app/outputs/flutter-apk/app-release.apk archethic-wallet-android-${{ steps.get_version.outputs.version_app }}.apk
+
+      - name: Check files
+        run: |
+          ls -R build/app/outputs/flutter-apk/
+          ls -R .
+
+      - name: Checksum
+        run: |
+          sha256sum archethic-wallet-android-${{ steps.get_version.outputs.version_app }}.apk
+
+      - name: Upload artifact to action
+        uses: actions/upload-artifact@v4
+        with:
+          name: archethic-wallet-android-${{ steps.get_version.outputs.version_app }}-apk
+          path: archethic-wallet-android-${{ steps.get_version.outputs.version_app }}.apk
+      - name: Upload artifact to release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: archethic-wallet-android-${{ steps.get_version.outputs.version_app }}.apk 
